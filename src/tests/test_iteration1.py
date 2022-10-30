@@ -165,9 +165,52 @@ def test_mod_value1():
     Kateen.attack(10, Cathaar)
     assert Cathaar.HP == 5
 
+def test_dexterity_mod():
+    Cinder = Character("Cinder", "Evil")
+    Cinder.skill["Dexterity"] = 12
+    Cinder.armor_mod()
+    assert Cinder.armor == 11
 
-# def test_can_level():
-    
+def test_constitution_mod():
+    Glacius = Character("Glacius", "Good")
+    Glacius.skill["Constitution"] = 14
+    Glacius.hp_mod()
+    assert Glacius.HP == 7
+
+def test_can_gain_xp():
+    Cinder = Character("Cinder", "Evil")
+    Glacius = Character("Glacius", "Good")
+    Cinder.attack(12, Glacius) #should clear armor
+    assert Cinder.xp == 10
+
+def test_can_level_xp_reset():
+    Cinder = Character("Cinder", "Evil")
+    Glacius = Character("Glacius", "Good")
+    Cinder.xp = 990
+    Cinder.attack(12, Glacius)
+    assert Cinder.xp == 0
+
+def test_can_level_up():
+    Cinder = Character("Cinder", "Evil")
+    Glacius = Character("Glacius", "Good")
+    Cinder.xp = 990
+    Cinder.attack(12, Glacius)
+    assert Cinder.level == 2
+
+def test_level_up_hp():
+    Cinder = Character("Cinder", "Evil")
+    Glacius = Character("Glacius", "Good")
+    Cinder.xp = 990
+    Cinder.attack(12, Glacius)
+    assert Cinder.HP == 10
+
+def test_level_up_hp_con():
+    Cinder = Character("Cinder", "Evil")
+    Glacius = Character("Glacius", "Good")
+    Cinder.skill["Constitution"] = 12
+    Cinder.xp = 990
+    Cinder.attack(12, Glacius)
+    assert Cinder.HP == 11
 
 # def test_fighter_class():
 #     Cathaar = Character("Cathaar", "Good")
